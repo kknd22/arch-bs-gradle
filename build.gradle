@@ -1,0 +1,58 @@
+
+buildscript { apply from: "bs.gradle", to: buildscript }
+
+apply plugin: "scala"
+
+group='aaa.bbb'
+version = '1.0-SNAPSHOT'
+
+
+apply from: "$toolGradleShared/common/common-display-info.gradle"
+apply from: "$toolGradleShared/common/common-jar-versions.gradle"
+apply from: "$toolGradleShared/common/common-repo.gradle"
+
+apply plugin: "com.github.maiflai.scalatest"
+
+
+apply from: "$toolGradleShared/java/java-compiler-config.gradle"
+apply from: "$toolGradleShared/scala/scala-style-config.gradle"
+apply from: "$toolGradleShared/scala/scala-coverage-config.gradle"
+apply from: "$toolGradleShared/scala/scala-compiler-config.gradle"
+apply from: "$toolGradleShared/publish/publish-nexus-repo-config.gradle"
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId project.group
+            version project.version
+            from components.java
+        }
+    }
+}
+
+dependencies {
+    compile "$playG:$playJsonJ:$playV"
+
+    compile "$scalaG:$scalaJ_reflect:$scalaV"
+
+    compile "$codeartisansG:$codeartisansJ:$codeartisansV"
+    compile "$marklogicG:$marklogicJ:$marklogicV"
+
+    //compile "$scalaG:scala-library:$scalaV"
+    //compile "$scalaG:scala-compiler:$scalaV"
+
+
+    compile "$slf4jG:$slf4jJ:$slf4jV"
+
+    compile "$typesafeConfigG:$typesafeConfigJ:$typesafeConfigV"
+
+    testCompile "$junitG:$junitJ:$junitV"
+    testCompile "$scalatestG:$scalatestJ:$scalatestV"
+
+    testRuntime "$pegdownG:$pegdownJ:$pegdownV"
+
+}
+
+
+
+

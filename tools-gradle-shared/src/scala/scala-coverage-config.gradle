@@ -1,0 +1,12 @@
+apply plugin: 'scoverage'
+
+
+dependencies {
+    scoverage "$scoverageG:$scoverageJ_plugin:$scoverageV"
+    scoverage "$scoverageG:$scoverageJ_runtime:$scoverageV"
+    scoverage "$scalaMacroG:$scalaMacroJ:$scalaMacroV"
+}
+
+tasks.withType(Test)  {
+    maxParallelForks = 1
+}

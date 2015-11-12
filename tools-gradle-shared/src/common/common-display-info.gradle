@@ -1,0 +1,17 @@
+if (System.properties['os.name'].toLowerCase().contains('windows'))
+    ext.isOSWindow=true
+else
+    ext.isOSWindow=false
+
+
+println "#######################################################################"
+println "#"
+println "#  root project is:           [${rootProject.name}]"
+println "#  detected os is:            [${System.properties['os.name']}]"
+println "#  detected java home is:     [${System.properties['java.home']}]"
+println "#  detected java version is:  [${System.properties['java.version']}]"
+println "#  detected java vendor is:   [${System.properties['java.vendor']}]"
+println "#  build version is:          [$version]"
+println "#  starting task is:          ${gradle.startParameter.taskNames}"
+println "#"
+println "#######################################################################"

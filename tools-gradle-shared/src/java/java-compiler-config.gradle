@@ -1,0 +1,43 @@
+apply plugin: 'java'
+
+//configurations { providedCompile }
+//sourceSets.main.compileClasspath += configurations.providedCompile
+//sourceSets.test.compileClasspath += configurations.providedCompile
+//sourceSets.test.runtimeClasspath = configurations.providedCompile + sourceSets.test.runtimeClasspath
+
+ext {
+
+    jdkVersion = System.properties['java.vm.name'] + ", " + System.properties['java.version']
+
+    implementation_vendor = 'CMS'
+    implementation_title = 'FFM SES'
+    implementation_version = version
+
+    incrementalCompile=false
+
+}
+
+jar {
+    manifest {
+        attributes(
+                'Manifest-Version': '1.0',
+                'Gradle-Version': gradle.gradleVersion,
+                'Created-By': jdkVersion,
+                'Implementation-Vendor': implementation_vendor,
+                'Implementation-Version': implementation_version,
+                'Implementation-Title': implementation_title
+        )
+    }
+}
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options.each {
+    it.deprecation = false
+    it.debug = true
+    it.debugOptions.debugLevel = 'lines,vars,source'
+    it.verbose = false
+    it.warnings = false
+}

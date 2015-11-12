@@ -1,0 +1,7 @@
+apply plugin: 'scalaStyle'
+
+scalaStyle {
+    configLocation = "scalastyle-config.xml"
+    includeTestSourceDirectory = false
+    source = "src/main/scala"
+}

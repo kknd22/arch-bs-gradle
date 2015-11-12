@@ -1,0 +1,23 @@
+configurations {
+    scalaCompiler
+}
+configurations.scalaCompiler.transitive = false
+
+dependencies {
+    scalaCompiler "$scalaMacroG:$scalaMacroJ:$scalaMacroV"
+}
+def tempGString = "-Xplugin:$configurations.scalaCompiler.singleFile.path"
+ext.scalaCompilerOptions= tempGString.toString()
+
+compileScala.scalaCompileOptions.additionalParameters = [scalaCompilerOptions]
+compileTestScala.scalaCompileOptions.additionalParameters = [scalaCompilerOptions]
+compileScoverageScala.scalaCompileOptions.additionalParameters = [scalaCompilerOptions]
+compileTestScoverageScala.scalaCompileOptions.additionalParameters = [scalaCompilerOptions]
+
+[compileScala, compileTestScala]*.options.each {
+    it.deprecation = false
+    it.debug = true
+    it.debugOptions.debugLevel = 'lines,vars,source'
+    it.verbose = false
+    it.warnings = false
+}

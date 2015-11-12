@@ -1,0 +1,42 @@
+
+buildscript {
+    ext {
+        toolGradleVersion ='1.0-SNAPSHOT'
+        toolGradleArtifactId ='tools-gradle-shared'
+        toolGradleGroupId ='tools.gradle'
+        toolGradleShared = "$buildDir/$toolGradleArtifactId"
+        nexusRepoSite = 'https://nexus/content/repositories'
+        nexusReleaseUrl = "${nexusRepoSite}/release"
+        nexusSnapshotUrl = "${nexusRepoSite}/snapshot"
+    }
+    repositories {
+        mavenLocal()
+        // todo: change to our own nexus repo later on
+        jcenter()
+        //-- todo end
+        maven {
+            url nexusReleaseUrl
+            credentials {
+                username nexusUsername
+                password nexusPassword
+            }
+        }
+        maven {
+            url nexusSnapshotUrl
+            credentials {
+                username nexusUsername
+                password nexusPassword
+            }
+        }
+    }
+    dependencies {
+        classpath 'org.github.ngbinh.scalastyle:gradle-scalastyle-plugin_2.11:0.7.2'
+        classpath 'org.scoverage:gradle-scoverage:1.0.9'
+        classpath 'com.github.maiflai:gradle-scalatest:0.10'
+        classpath "$toolGradleGroupId:$toolGradleArtifactId:$toolGradleVersion"
+    }
+    dependencies {
+        ant.unjar src:  configurations.classpath.filter{it.name.contains(toolGradleArtifactId)}.singleFile, dest: toolGradleShared
+    }
+}
+

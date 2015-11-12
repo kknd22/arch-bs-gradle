@@ -1,0 +1,44 @@
+if (!project.hasProperty('nexusUsername') || !project.hasProperty('nexusPassword')) {
+   println """ !!!!!!!!!
+                missing nexusUsername and/or nexusPassword
+                you can either pass in gradle command line
+                gradle -PnexusUsername=<userName> -PnexusPassword=<password>
+                or in ~/.gradle/gradle.properties define
+                          nexusUsername=<userName>
+                          nexusPassword=<password> """
+}
+
+ext {
+    nexusRepoSite = 'https://nexus/content/repositories'
+    nexusReleaseUrl = "${nexusRepoSite}/release"
+    nexusSnapshotUrl = "${nexusRepoSite}/snapshot"
+}
+
+
+
+apply plugin: 'maven'
+apply plugin: 'java'
+
+group='tools.gradle'
+version = '1.0-SNAPSHOT'
+
+
+apply from: 'src/publish/publish-nexus-repo-config.gradle'
+
+jar {
+    from('src') {
+        include '**/*.gradle'
+    }
+}
+
+
+publishing {
+    publications {
+        gradleJar(MavenPublication) {
+            artifact jar
+            //artifactId 'common-display-info'
+            //artifact file ('shared/common/common-display-info.gradle')
+        }
+
+    }
+}

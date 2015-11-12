@@ -1,0 +1,28 @@
+allprojects {
+    
+    
+    buildscript {
+        repositories {
+            mavenLocal()
+            // todo: change to our own nexus repo later on
+            jcenter()
+            //-- todo end
+            maven {
+                url nexusReleaseUrl
+                credentials {
+                    username nexusUsername
+                    password nexusPassword
+                }
+            }
+            maven {
+                url nexusSnapshotUrl
+                credentials {
+                    username nexusUsername
+                    password nexusPassword
+                }
+            }
+        }
+    }
+
+
+}
